@@ -1,0 +1,56 @@
+extends base
+
+block content
+  main.main
+    .card-container
+      if bookings.length === 0
+        .no-results
+          h2 You haven't booked any tours yet!
+          p Browse our available tours and book one today.
+          a.btn.btn--green(href='/') View All Tours
+
+      else
+        each booking in bookings
+          .card
+            .card__header
+              .card__picture
+                .card__picture-overlay &nbsp;
+                img.card__picture-img(src=`/img/tours/${booking.tour.imageCover}`, alt=`${booking.tour.name}`)
+              h3.heading-tertirary
+                span= booking.tour.name
+
+            .card__details
+              h4.card__sub-heading= `${booking.tour.difficulty} ${booking.tour.duration}-day tour`
+              p.card__text= booking.tour.summary
+              .card__data
+                svg.card__icon
+                  use(xlink:href='/img/icons.svg#icon-map-pin')
+                span= booking.tour.startLocation.description
+              .card__data
+                svg.card__icon
+                  use(xlink:href='/img/icons.svg#icon-calendar')
+                span= booking.tour.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric'})
+              .card__data
+                svg.card__icon
+                  use(xlink:href='/img/icons.svg#icon-flag')
+                span= `${booking.tour.locations.length} stops`
+              .card__data
+                svg.card__icon
+                  use(xlink:href='/img/icons.svg#icon-user')
+                span= `${booking.tour.maxGroupSize} people`
+
+            .card__footer
+              p
+                span.card__footer-value= `$${booking.price}`
+                | 
+                span.card__footer-text paid
+              p.card__ratings
+                span.card__footer-value= booking.tour.ratingsAverage
+                | 
+                span.card__footer-text= `rating (${booking.tour.ratingsQuantity})`
+              .booking-status
+                if booking.paid
+                  span.badge.badge--success ✓ Paid
+                p.booking-date
+                  | Booked on: 
+                  = booking.createdAt.toLocaleDateString('en-us', {year: 'numeric', month: 'long', day: 'numeric'})

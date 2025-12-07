@@ -1,0 +1,9 @@
+{
+  "watch": ["server.js", "app.js", "routes/", "controllers/"],
+  "ext": "js,json",
+  "ignore": ["node_modules/"],
+  "delay": "100ms"
+}
+// Now, we can run the server using the following command:
+// npm run start:dev    // This will start the server in development mode
+// npm run start:prod   // This will start the server in production mode
